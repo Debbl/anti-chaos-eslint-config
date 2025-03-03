@@ -27,6 +27,7 @@
     "dev": "pnpm build && npx @eslint/config-inspector",
     "lint": "pnpm build && npx eslint",
     "lint:fix": "pnpm build && npx eslint --fix",
+    "typecheck": "tsc --noEmit",
     "release": "npm publish --access=public"
   },
   "files": [
