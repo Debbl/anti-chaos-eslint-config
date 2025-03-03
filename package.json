@@ -2,7 +2,16 @@
   "name": "@ntks/eslint-config",
   "version": "0.0.0",
   "description": "Anti-chaos ESLint Config",
-  "main": "index.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "packageManager": "pnpm@10.5.2",
   "keywords": [
     "eslint"
   ],
@@ -14,26 +23,48 @@
   },
   "homepage": "https://github.com/anti-chaos/eslint-config#readme",
   "scripts": {
+    "build": "tsup",
+    "dev": "pnpm build && npx @eslint/config-inspector",
+    "lint": "pnpm build && npx eslint",
+    "lint:fix": "pnpm build && npx eslint --fix",
+    "typecheck": "tsc --noEmit",
     "release": "npm publish --access=public"
   },
-  "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.17.0",
-    "@typescript-eslint/parser": "^4.16.1",
-    "@vue/eslint-config-standard": "^6.0.0",
-    "@vue/eslint-config-typescript": "^7.0.0",
-    "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.3.1",
-    "eslint-plugin-promise": "^4.3.1",
-    "eslint-plugin-vue": "^7.7.0"
-  },
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
-    "eslint": "^7.21.0",
-    "prettier": "^2.2.1"
+    "@eslint/config-inspector": "^1.0.1",
+    "eslint": "^9.21.0",
+    "lint-staged": "^15.4.3",
+    "prettier": "^3.5.3",
+    "simple-git-hooks": "^2.11.1",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.2"
   },
   "peerDependencies": {
     "eslint": ">=7.21.0",
     "prettier": ">=2.2.1"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "simple-git-hooks"
+    ]
+  },
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.25.0",
+    "@typescript-eslint/parser": "^8.25.0",
+    "eslint-config-flat-gitignore": "^2.1.0",
+    "eslint-config-prettier": "^10.0.2",
+    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-unused-imports": "^4.1.4",
+    "globals": "^16.0.0"
   }
 }
